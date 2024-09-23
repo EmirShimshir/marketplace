@@ -1,0 +1,818 @@
+definitions:
+  dto.CartDTO:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/dto.CartItemDTO'
+        type: array
+      total_price:
+        type: integer
+    type: object
+  dto.CartItemDTO:
+    properties:
+      cart_item_id:
+        type: string
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo_url:
+        type: string
+      price:
+        type: integer
+      product_id:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  dto.CreateCartItemDTO:
+    properties:
+      product_id:
+        type: string
+      quantity:
+        type: integer
+    required:
+    - product_id
+    - quantity
+    type: object
+  dto.CreateOrderCustomerDTO:
+    properties:
+      address:
+        type: string
+    required:
+    - address
+    type: object
+  dto.CreateShopDTO:
+    properties:
+      description:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      requisites:
+        type: string
+    required:
+    - description
+    - email
+    - name
+    - requisites
+    type: object
+  dto.CreateWithdrawDTO:
+    properties:
+      comment:
+        type: string
+      sum:
+        type: integer
+    required:
+    - comment
+    - sum
+    type: object
+  dto.OrderCustomerDTO:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      orderShopDTOs:
+        items:
+          $ref: '#/definitions/dto.OrderShopDTO'
+        type: array
+      payed:
+        type: string
+      total_price:
+        type: integer
+    required:
+    - address
+    - created_at
+    - id
+    - orderShopDTOs
+    - payed
+    - total_price
+    type: object
+  dto.OrderShopDTO:
+    properties:
+      id:
+        type: string
+      order_shop_items:
+        items:
+          $ref: '#/definitions/dto.OrderShopItemDTO'
+        type: array
+      shop_id:
+        type: string
+      status:
+        type: string
+    required:
+    - id
+    - order_shop_items
+    - shop_id
+    - status
+    type: object
+  dto.OrderShopItemDTO:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo_url:
+        type: string
+      price:
+        type: integer
+      product_id:
+        type: string
+      quantity:
+        type: integer
+    required:
+    - category
+    - description
+    - name
+    - photo_url
+    - price
+    - product_id
+    - quantity
+    type: object
+  dto.ProductDTO:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo_url:
+        type: string
+      price:
+        type: integer
+      product_id:
+        type: string
+    type: object
+  dto.RefreshDTO:
+    properties:
+      fingerprint:
+        type: string
+    required:
+    - fingerprint
+    type: object
+  dto.ShopDTO:
+    properties:
+      description:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      requisites:
+        type: string
+    type: object
+  dto.ShopItemDTO:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo_url:
+        type: string
+      price:
+        type: integer
+      product_id:
+        type: string
+      quantity:
+        type: integer
+      shop_id:
+        type: string
+    type: object
+  dto.ShopItemsByShopIdDTO:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      products:
+        items:
+          $ref: '#/definitions/dto.ShopItemDTO'
+        type: array
+    type: object
+  dto.SignInDTO:
+    properties:
+      email:
+        type: string
+      fingerprint:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - fingerprint
+    - password
+    type: object
+  dto.SignUpDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      role:
+        type: integer
+      surname:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - surname
+    type: object
+  dto.UpdateCartItemDTO:
+    properties:
+      cart_product_id:
+        type: string
+      quantity:
+        type: integer
+    required:
+    - cart_product_id
+    - quantity
+    type: object
+  dto.UpdateUserDTO:
+    properties:
+      name:
+        type: string
+      phone:
+        type: string
+      surname:
+        type: string
+    type: object
+  dto.UserDTO:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      role:
+        type: string
+      surname:
+        type: string
+    type: object
+  dto.WithdrawDTO:
+    properties:
+      comment:
+        type: string
+      id:
+        type: string
+      shop_id:
+        type: string
+      status:
+        type: string
+      sum:
+        type: integer
+    type: object
+info:
+  contact:
+    email: emir2701@yandex.ru
+    name: API Support
+    url: https://t.me/Emir_Shimshir
+  description: This is simple api for marketplace
+  title: Marketplace API
+  version: "1.0"
+paths:
+  /api/v1/auth/logout:
+    post:
+      description: logout
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Logout
+      tags:
+      - auth
+  /api/v1/auth/refresh:
+    post:
+      description: refresh
+      parameters:
+      - description: fingerprint
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RefreshDTO'
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Refresh
+      tags:
+      - auth
+  /api/v1/auth/sign-in:
+    post:
+      description: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SignInDTO'
+      responses: {}
+      summary: SignIn
+      tags:
+      - auth
+  /api/v1/auth/sign-up:
+    post:
+      description: create account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SignUpDTO'
+      responses: {}
+      summary: SignUp
+      tags:
+      - auth
+  /api/v1/cart/customer:
+    get:
+      description: get cart
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CartDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: getCart
+      tags:
+      - cart
+    post:
+      description: create cart product
+      parameters:
+      - description: cart product info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCartItemDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CartItemDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: createCartItem
+      tags:
+      - cart
+    put:
+      description: update cart product
+      parameters:
+      - description: cart product info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCartItemDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CartItemDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: updateCartItem
+      tags:
+      - cart
+  /api/v1/cart/customer/{cart_product_id}:
+    delete:
+      description: delete cart product
+      parameters:
+      - description: cartItemID
+        in: path
+        name: cart_product_id
+        required: true
+        type: string
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: deleteCartItem
+      tags:
+      - cart
+  /api/v1/order/customer:
+    get:
+      description: get order customer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderCustomerDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: getOrderCustomersByCustomerID
+      tags:
+      - order
+    post:
+      description: create order customer
+      parameters:
+      - description: order customer info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateOrderCustomerDTO'
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: createOrderCustomer
+      tags:
+      - order
+  /api/v1/order/seller/{order_shop_id}:
+    put:
+      description: update order shop status
+      parameters:
+      - description: orderShopID
+        in: path
+        name: order_shop_id
+        required: true
+        type: string
+      - description: status
+        in: query
+        name: status
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderShopDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: updateOrderShopStatusByShopID
+      tags:
+      - order
+  /api/v1/order/seller/{shop_id}:
+    get:
+      description: get order shops
+      parameters:
+      - description: shopID
+        in: path
+        name: shop_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderShopDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: getOrderShopsByShopID
+      tags:
+      - order
+  /api/v1/payment/customer:
+    post:
+      description: pay order
+      parameters:
+      - description: key
+        in: query
+        name: key
+        required: true
+        type: string
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: payOrder
+      tags:
+      - payment
+  /api/v1/product:
+    get:
+      description: get product by name
+      parameters:
+      - description: name
+        in: query
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ProductDTO'
+            type: array
+      summary: getProductsNyName
+      tags:
+      - product
+  /api/v1/product/{id}:
+    get:
+      description: get shop product
+      parameters:
+      - description: productID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ShopItemDTO'
+      summary: GetShopProduct
+      tags:
+      - product
+  /api/v1/product/all:
+    get:
+      description: get shop products all
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ShopItemDTO'
+            type: array
+      summary: GetShopProduct
+      tags:
+      - product
+  /api/v1/product/shop/{id}:
+    get:
+      description: get shop products by shop ID
+      parameters:
+      - description: shopID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ShopItemsByShopIdDTO'
+      summary: GetShopItemsByShopID
+      tags:
+      - product
+  /api/v1/shop/moderator/product/{product_id}:
+    delete:
+      description: delete shop product
+      parameters:
+      - description: productID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: deleteShopItem
+      tags:
+      - shop
+  /api/v1/shop/seller:
+    get:
+      description: get shops by sellerID
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ShopDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: getShopsBySellerID
+      tags:
+      - shop
+    post:
+      description: create shop
+      parameters:
+      - description: shop info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateShopDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ShopDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: createShop
+      tags:
+      - shop
+  /api/v1/shop/seller/product/{product_id}:
+    put:
+      description: update shop product
+      parameters:
+      - description: productID
+        in: path
+        name: product_id
+        required: true
+        type: string
+      - description: count product
+        in: query
+        name: count
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ShopItemDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: updateShopItem
+      tags:
+      - shop
+  /api/v1/shop/seller/product/{shop_id}:
+    post:
+      consumes:
+      - multipart/form-data
+      description: create shop product
+      parameters:
+      - description: shopID
+        in: path
+        name: shop_id
+        required: true
+        type: string
+      - description: product info
+        in: formData
+        name: json
+        required: true
+        type: string
+      - description: Upload file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ShopItemDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: createShopProduct
+      tags:
+      - shop
+  /api/v1/user:
+    get:
+      description: get user
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: GetUser
+      tags:
+      - user
+    put:
+      description: update user
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateUserDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateUser
+      tags:
+      - user
+  /api/v1/withdraw/moderator:
+    get:
+      description: get withdraws
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.WithdrawDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: getWithdrawsAll
+      tags:
+      - withdraw
+  /api/v1/withdraw/moderator/{id}:
+    put:
+      description: update withdraw
+      parameters:
+      - description: withdrawID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: status
+        in: query
+        name: status
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.WithdrawDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: updateWithdraw
+      tags:
+      - withdraw
+  /api/v1/withdraw/seller/{shop_id}:
+    get:
+      description: get withdraws by shopID
+      parameters:
+      - description: shopID
+        in: path
+        name: shop_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.WithdrawDTO'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: getWithdrawByShopID
+      tags:
+      - withdraw
+    post:
+      description: create withdraw
+      parameters:
+      - description: shopID
+        in: path
+        name: shop_id
+        required: true
+        type: string
+      - description: withdraw info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateWithdrawDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.WithdrawDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: createWithdraw
+      tags:
+      - withdraw
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

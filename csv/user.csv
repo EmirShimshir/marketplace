@@ -1,0 +1,4 @@
+id,name,surname,email,password,phone,cart_id,role
+30e18bc1-4354-4937-9a3b-03cf0b7027cb,customer,customer,customer@mail.ru,313233343536b39f008e318efd2bb988d724a161b61c6909677f,+71111111111,30e18bc1-4354-4937-9a3b-03cf0b7034cc,Customer
+30e18bc1-4354-4937-9a3b-03cf0b7027cc,seller,seller,seller@mail.ru,3132333435362e7464a5e9bac192f1251866fea0c255db0cbd83,NULL,NULL,Seller
+30e18bc1-4354-4937-9a3b-03cf0b7027aa,moderator,moderator,moderator@mail.ru,31323334353679f52b5b92498b00cb18284f1dcb466bd40ad559,NULL,NULL,Moderator
