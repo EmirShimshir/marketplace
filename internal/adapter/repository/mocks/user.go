@@ -70,24 +70,6 @@ func (_m *UserRepository) CreateWithoutCart(ctx context.Context, user domain.Use
 	return r0, r1
 }
 
-// Delete provides a mock function with given fields: ctx, userID
-func (_m *UserRepository) Delete(ctx context.Context, userID domain.ID) error {
-	ret := _m.Called(ctx, userID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for Delete")
-	}
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) error); ok {
-		r0 = rf(ctx, userID)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // Get provides a mock function with given fields: Ctx, limit, offset
 func (_m *UserRepository) Get(Ctx context.Context, limit int64, offset int64) ([]domain.User, error) {
 	ret := _m.Called(Ctx, limit, offset)

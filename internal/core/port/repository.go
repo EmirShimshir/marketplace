@@ -12,16 +12,10 @@ type IUserRepository interface {
 	Create(ctx context.Context, user domain.User) (domain.User, error)
 	CreateWithoutCart(ctx context.Context, user domain.User) (domain.User, error)
 	Update(ctx context.Context, user domain.User) (domain.User, error)
-	Delete(ctx context.Context, userID domain.ID) error
 }
 
 type IProductRepository interface {
-	Get(ctx context.Context, limit, offset int64) ([]domain.Product, error)
 	GetByID(ctx context.Context, productID domain.ID) (domain.Product, error)
-	GetByName(ctx context.Context, name string) ([]domain.Product, error)
-	Create(ctx context.Context, product domain.Product) (domain.Product, error)
-	Update(ctx context.Context, product domain.Product) (domain.Product, error)
-	Delete(ctx context.Context, productID domain.ID) error
 }
 
 type ICartRepository interface {

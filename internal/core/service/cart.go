@@ -110,21 +110,6 @@ func (c *CartService) ClearCart(ctx context.Context, cartID domain.ID) error {
 	return nil
 }
 
-func (c *CartService) GetCartItemByID(ctx context.Context, cartItemID domain.ID) (domain.CartItem, error) {
-	cartItem, err := c.cartRepo.GetCartItemByID(ctx, cartItemID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "GetCartItemByID",
-		}).Error(err.Error())
-		return domain.CartItem{}, err
-	}
-
-	log.WithFields(log.Fields{
-		"CartID": cartItem.CartID,
-	}).Info("GetCartItemByID OK")
-	return cartItem, nil
-}
-
 func (c *CartService) CreateCartItem(ctx context.Context, param port.CreateCartItemParam) (domain.CartItem, error) {
 	shopItem, err := c.shopRepo.GetShopItemByProductID(ctx, param.ProductID)
 	if err != nil {

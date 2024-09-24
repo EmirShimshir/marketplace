@@ -72,24 +72,6 @@ func (_m *ShopService) CreateShopItem(ctx context.Context, param port.CreateShop
 	return r0, r1
 }
 
-// DeleteShop provides a mock function with given fields: ctx, shopID
-func (_m *ShopService) DeleteShop(ctx context.Context, shopID domain.ID) error {
-	ret := _m.Called(ctx, shopID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for DeleteShop")
-	}
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) error); ok {
-		r0 = rf(ctx, shopID)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // DeleteShopItem provides a mock function with given fields: ctx, shopItemID
 func (_m *ShopService) DeleteShopItem(ctx context.Context, shopItemID domain.ID) error {
 	ret := _m.Called(ctx, shopItemID)
@@ -166,34 +148,6 @@ func (_m *ShopService) GetShopBySellerID(ctx context.Context, sellerID domain.ID
 	return r0, r1
 }
 
-// GetShopItemByID provides a mock function with given fields: ctx, shopItemID
-func (_m *ShopService) GetShopItemByID(ctx context.Context, shopItemID domain.ID) (domain.ShopItem, error) {
-	ret := _m.Called(ctx, shopItemID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for GetShopItemByID")
-	}
-
-	var r0 domain.ShopItem
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) (domain.ShopItem, error)); ok {
-		return rf(ctx, shopItemID)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) domain.ShopItem); ok {
-		r0 = rf(ctx, shopItemID)
-	} else {
-		r0 = ret.Get(0).(domain.ShopItem)
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, domain.ID) error); ok {
-		r1 = rf(ctx, shopItemID)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
 // GetShopItemByProductID provides a mock function with given fields: ctx, productID
 func (_m *ShopService) GetShopItemByProductID(ctx context.Context, productID domain.ID) (domain.ShopItem, error) {
 	ret := _m.Called(ctx, productID)
@@ -245,64 +199,6 @@ func (_m *ShopService) GetShopItems(ctx context.Context, limit int64, offset int
 
 	if rf, ok := ret.Get(1).(func(context.Context, int64, int64) error); ok {
 		r1 = rf(ctx, limit, offset)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// GetShops provides a mock function with given fields: ctx, limit, offset
-func (_m *ShopService) GetShops(ctx context.Context, limit int64, offset int64) ([]domain.Shop, error) {
-	ret := _m.Called(ctx, limit, offset)
-
-	if len(ret) == 0 {
-		panic("no return value specified for GetShops")
-	}
-
-	var r0 []domain.Shop
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, int64, int64) ([]domain.Shop, error)); ok {
-		return rf(ctx, limit, offset)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, int64, int64) []domain.Shop); ok {
-		r0 = rf(ctx, limit, offset)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]domain.Shop)
-		}
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, int64, int64) error); ok {
-		r1 = rf(ctx, limit, offset)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// UpdateShop provides a mock function with given fields: ctx, shopID, param
-func (_m *ShopService) UpdateShop(ctx context.Context, shopID domain.ID, param port.UpdateShopParam) (domain.Shop, error) {
-	ret := _m.Called(ctx, shopID, param)
-
-	if len(ret) == 0 {
-		panic("no return value specified for UpdateShop")
-	}
-
-	var r0 domain.Shop
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID, port.UpdateShopParam) (domain.Shop, error)); ok {
-		return rf(ctx, shopID, param)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID, port.UpdateShopParam) domain.Shop); ok {
-		r0 = rf(ctx, shopID, param)
-	} else {
-		r0 = ret.Get(0).(domain.Shop)
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, domain.ID, port.UpdateShopParam) error); ok {
-		r1 = rf(ctx, shopID, param)
 	} else {
 		r1 = ret.Error(1)
 	}

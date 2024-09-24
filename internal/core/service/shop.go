@@ -8,34 +8,19 @@ import (
 )
 
 type ShopService struct {
-	repo    port.IShopRepository
-	storage port.IObjectStorage
+	shopRepo port.IShopRepository
+	storage  port.IObjectStorage
 }
 
 func NewShopService(repo port.IShopRepository, storage port.IObjectStorage) *ShopService {
 	return &ShopService{
-		repo:    repo,
-		storage: storage,
+		shopRepo: repo,
+		storage:  storage,
 	}
-}
-
-func (s *ShopService) GetShops(ctx context.Context, limit, offset int64) ([]domain.Shop, error) {
-	shop, err := s.repo.GetShops(ctx, limit, offset)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "GetShops",
-		}).Error(err.Error())
-		return nil, err
-	}
-
-	log.WithFields(log.Fields{
-		"count": len(shop),
-	}).Info("GetShops OK")
-	return shop, nil
 }
 
 func (s *ShopService) GetShopByID(ctx context.Context, shopID domain.ID) (domain.Shop, error) {
-	shop, err := s.repo.GetShopByID(ctx, shopID)
+	shop, err := s.shopRepo.GetShopByID(ctx, shopID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "GetShopByID",
@@ -50,7 +35,7 @@ func (s *ShopService) GetShopByID(ctx context.Context, shopID domain.ID) (domain
 }
 
 func (s *ShopService) GetShopBySellerID(ctx context.Context, sellerID domain.ID) ([]domain.Shop, error) {
-	shop, err := s.repo.GetShopBySellerID(ctx, sellerID)
+	shop, err := s.shopRepo.GetShopBySellerID(ctx, sellerID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "GetShopBySellerID",
@@ -84,7 +69,7 @@ func (s *ShopService) CreateShop(ctx context.Context, sellerID domain.ID, param 
 		return domain.Shop{}, domain.ErrRequisites
 	}
 
-	shop, err := s.repo.CreateShop(ctx, domain.Shop{
+	shop, err := s.shopRepo.CreateShop(ctx, domain.Shop{
 		ID:          domain.NewID(),
 		SellerID:    sellerID,
 		Name:        param.Name,
@@ -107,85 +92,8 @@ func (s *ShopService) CreateShop(ctx context.Context, sellerID domain.ID, param 
 	return shop, nil
 }
 
-func (s *ShopService) UpdateShop(ctx context.Context, shopID domain.ID, param port.UpdateShopParam) (domain.Shop, error) {
-	shop, err := s.GetShopByID(ctx, shopID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "UpdateShop",
-		}).Error(err.Error())
-		return domain.Shop{}, err
-	}
-
-	if param.Name.Valid {
-		shop.Name = param.Name.String
-	}
-	if param.Description.Valid {
-		shop.Description = param.Description.String
-	}
-	if param.Requisites.Valid {
-		shop.Requisites = param.Requisites.String
-	}
-	if param.Email.Valid {
-		shop.Email = param.Email.String
-	}
-
-	if shop.Name == "" {
-		return domain.Shop{}, domain.ErrName
-	}
-	if shop.Description == "" {
-		return domain.Shop{}, domain.ErrDescription
-	}
-	if shop.Requisites == "" {
-		return domain.Shop{}, domain.ErrRequisites
-	}
-
-	shop, err = s.repo.UpdateShop(ctx, shop)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "UpdateShop",
-		}).Error(err.Error())
-		return domain.Shop{}, err
-	}
-
-	log.WithFields(log.Fields{
-		"SellerID": shop.SellerID,
-		"Email":    shop.Email,
-	}).Info("UpdateShop OK")
-	return shop, nil
-}
-
-func (s *ShopService) DeleteShop(ctx context.Context, shopID domain.ID) error {
-	err := s.repo.DeleteShop(ctx, shopID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "DeleteShop",
-		}).Error(err.Error())
-		return err
-	}
-
-	log.WithFields(log.Fields{
-		"shopID": shopID,
-	}).Info("DeleteShop OK")
-	return nil
-}
-
-func (s *ShopService) GetShopItemByID(ctx context.Context, shopItemID domain.ID) (domain.ShopItem, error) {
-	shopItem, err := s.repo.GetShopItemByID(ctx, shopItemID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "GetShopItemByID",
-		}).Error(err.Error())
-		return domain.ShopItem{}, err
-	}
-
-	log.WithFields(log.Fields{
-		"shopItemID": shopItemID,
-	}).Info("GetShopItemByID OK")
-	return shopItem, nil
-}
-
 func (s *ShopService) GetShopItems(ctx context.Context, limit, offset int64) ([]domain.ShopItem, error) {
-	shopItems, err := s.repo.GetShopItems(ctx, limit, offset)
+	shopItems, err := s.shopRepo.GetShopItems(ctx, limit, offset)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "GetShopItems",
@@ -200,7 +108,7 @@ func (s *ShopService) GetShopItems(ctx context.Context, limit, offset int64) ([]
 }
 
 func (s *ShopService) GetShopItemByProductID(ctx context.Context, productID domain.ID) (domain.ShopItem, error) {
-	shopItem, err := s.repo.GetShopItemByProductID(ctx, productID)
+	shopItem, err := s.shopRepo.GetShopItemByProductID(ctx, productID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "GetShopItemByProductID",
@@ -269,7 +177,7 @@ func (s *ShopService) CreateShopItem(ctx context.Context, param port.CreateShopI
 		Quantity:  param.Quantity,
 	}
 
-	shopItem, err = s.repo.CreateShopItem(ctx, shopItem, product)
+	shopItem, err = s.shopRepo.CreateShopItem(ctx, shopItem, product)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "CreateShopItem",
@@ -284,7 +192,7 @@ func (s *ShopService) CreateShopItem(ctx context.Context, param port.CreateShopI
 }
 
 func (s *ShopService) UpdateShopItem(ctx context.Context, shopItemID domain.ID, param port.UpdateShopItemParam) (domain.ShopItem, error) {
-	shopItem, err := s.repo.GetShopItemByID(ctx, shopItemID)
+	shopItem, err := s.shopRepo.GetShopItemByID(ctx, shopItemID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "UpdateShopItem",
@@ -302,7 +210,7 @@ func (s *ShopService) UpdateShopItem(ctx context.Context, shopItemID domain.ID, 
 		shopItem.Quantity = param.Quantity.Int64
 	}
 
-	shopItem, err = s.repo.UpdateShopItem(ctx, shopItem)
+	shopItem, err = s.shopRepo.UpdateShopItem(ctx, shopItem)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "UpdateShopItem",
@@ -318,7 +226,7 @@ func (s *ShopService) UpdateShopItem(ctx context.Context, shopItemID domain.ID, 
 }
 
 func (s *ShopService) DeleteShopItem(ctx context.Context, shopItemID domain.ID) error {
-	err := s.repo.DeleteShopItem(ctx, shopItemID)
+	err := s.shopRepo.DeleteShopItem(ctx, shopItemID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "DeleteShopItem",

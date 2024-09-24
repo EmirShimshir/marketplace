@@ -106,22 +106,6 @@ func (a *AuthService) Refresh(ctx context.Context, refreshToken domain.Token,
 	return ad, nil
 }
 
-func (a *AuthService) Verify(ctx context.Context, accessToken domain.Token) error {
-	_, err := a.authProvider.VerifyJWTToken(accessToken)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "Verify",
-		}).Error(err.Error())
-		return err
-	}
-
-	log.WithFields(log.Fields{
-		"from":         "LogOut",
-		"refreshToken": accessToken.String(),
-	}).Info("Verify OK")
-	return nil
-}
-
 func (a *AuthService) Payload(ctx context.Context, accessToken domain.Token) (domain.AuthPayload, error) {
 	ap, err := a.authProvider.VerifyJWTToken(accessToken)
 	if err != nil {

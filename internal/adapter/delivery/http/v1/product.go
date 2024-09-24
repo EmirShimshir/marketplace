@@ -2,7 +2,6 @@ package v1
 
 import (
 	"github.com/EmirShimshir/marketplace/internal/adapter/delivery/http/v1/dto"
-	"github.com/EmirShimshir/marketplace/internal/core/domain"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +10,6 @@ func (h *Handler) initProductsRoutes(api *gin.RouterGroup) {
 	{
 		productGroup.GET("/:id", h.getShopItem)
 		productGroup.GET("/all", h.getShopItemsAll)
-		productGroup.GET("", h.getProductsNyName)
 		productGroup.GET("/shop/:id", h.getShopItemsByShopID)
 	}
 }
@@ -43,38 +41,6 @@ func (h *Handler) getShopItem(context *gin.Context) {
 
 	ShopItemDTO := dto.NewShopItemDTO(shopItem, product)
 	h.successResponse(context, ShopItemDTO)
-}
-
-// @Summary getProductsNyName
-// @Tags product
-// @Description get product by name
-// @Param name query string true "name"
-// @Success 200 {object} []dto.ProductDTO
-// @Router /api/v1/product [get]
-func (h *Handler) getProductsNyName(context *gin.Context) {
-	name, err := getQueryParamString(context, "name")
-	if err != nil {
-		h.errorResponse(context, err)
-		return
-	}
-
-	products, err := h.productService.GetByName(context.Request.Context(), name)
-	if err != nil {
-		h.errorResponse(context, err)
-		return
-	}
-
-	if len(products) == 0 {
-		h.errorResponse(context, domain.ErrNotExist)
-		return
-	}
-
-	res := make([]dto.ProductDTO, 0, len(products))
-	for _, product := range products {
-		res = append(res, *dto.NewProductDTO(product))
-	}
-
-	h.successResponse(context, res)
 }
 
 // @Summary GetShopProduct

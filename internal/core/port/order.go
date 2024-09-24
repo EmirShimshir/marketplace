@@ -29,7 +29,6 @@ type CreateOrderShopItemParam struct {
 
 type IOrderService interface {
 	GetOrderCustomerByCustomerID(ctx context.Context, customerID domain.ID) ([]domain.OrderCustomer, error)
-	GetOrderCustomerByID(ctx context.Context, ID domain.ID) (domain.OrderCustomer, error)
 	CreateOrderCustomer(ctx context.Context, param CreateOrderCustomerParam) (domain.OrderCustomer, error)
 	GetOrderShopByID(ctx context.Context, orderShopID domain.ID) (domain.OrderShop, error)
 	GetOrderShopByShopID(ctx context.Context, shopID domain.ID) ([]domain.OrderShop, error)

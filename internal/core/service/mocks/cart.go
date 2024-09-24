@@ -108,34 +108,6 @@ func (_m *CartService) GetCartByID(ctx context.Context, cartID domain.ID) (domai
 	return r0, r1
 }
 
-// GetCartItemByID provides a mock function with given fields: ctx, cartItemID
-func (_m *CartService) GetCartItemByID(ctx context.Context, cartItemID domain.ID) (domain.CartItem, error) {
-	ret := _m.Called(ctx, cartItemID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for GetCartItemByID")
-	}
-
-	var r0 domain.CartItem
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) (domain.CartItem, error)); ok {
-		return rf(ctx, cartItemID)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) domain.CartItem); ok {
-		r0 = rf(ctx, cartItemID)
-	} else {
-		r0 = ret.Get(0).(domain.CartItem)
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, domain.ID) error); ok {
-		r1 = rf(ctx, cartItemID)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
 // UpdateCartItem provides a mock function with given fields: ctx, cartItemID, param
 func (_m *CartService) UpdateCartItem(ctx context.Context, cartItemID domain.ID, param port.UpdateCartItemParam) (domain.CartItem, error) {
 	ret := _m.Called(ctx, cartItemID, param)

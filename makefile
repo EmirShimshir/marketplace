@@ -9,6 +9,9 @@ up:
 	docker compose down
 	docker compose up -d
 
+test:
+	go test -race ./...
+
 copy_csv:
 	export PGPASSWORD=postgres && psql -h localhost -p 5432 -U postgres -d postgres -f ./csv/copy_csv.sql
 

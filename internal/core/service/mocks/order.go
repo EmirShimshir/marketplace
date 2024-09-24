@@ -74,34 +74,6 @@ func (_m *OrderService) GetOrderCustomerByCustomerID(ctx context.Context, custom
 	return r0, r1
 }
 
-// GetOrderCustomerByID provides a mock function with given fields: ctx, ID
-func (_m *OrderService) GetOrderCustomerByID(ctx context.Context, ID domain.ID) (domain.OrderCustomer, error) {
-	ret := _m.Called(ctx, ID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for GetOrderCustomerByID")
-	}
-
-	var r0 domain.OrderCustomer
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) (domain.OrderCustomer, error)); ok {
-		return rf(ctx, ID)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) domain.OrderCustomer); ok {
-		r0 = rf(ctx, ID)
-	} else {
-		r0 = ret.Get(0).(domain.OrderCustomer)
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, domain.ID) error); ok {
-		r1 = rf(ctx, ID)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
 // GetOrderShopByID provides a mock function with given fields: ctx, orderShopID
 func (_m *OrderService) GetOrderShopByID(ctx context.Context, orderShopID domain.ID) (domain.OrderShop, error) {
 	ret := _m.Called(ctx, orderShopID)

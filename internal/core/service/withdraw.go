@@ -8,17 +8,17 @@ import (
 )
 
 type WithdrawService struct {
-	repo port.IWithdrawRepository
+	withdrawRepo port.IWithdrawRepository
 }
 
 func NewWithdrawService(repo port.IWithdrawRepository) *WithdrawService {
 	return &WithdrawService{
-		repo: repo,
+		withdrawRepo: repo,
 	}
 }
 
 func (w *WithdrawService) Get(ctx context.Context, limit, offset int64) ([]domain.Withdraw, error) {
-	withdraws, err := w.repo.Get(ctx, limit, offset)
+	withdraws, err := w.withdrawRepo.Get(ctx, limit, offset)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "WithdrawGet",
@@ -33,7 +33,7 @@ func (w *WithdrawService) Get(ctx context.Context, limit, offset int64) ([]domai
 }
 
 func (w *WithdrawService) GetByID(ctx context.Context, withdrawID domain.ID) (domain.Withdraw, error) {
-	withdraw, err := w.repo.GetByID(ctx, withdrawID)
+	withdraw, err := w.withdrawRepo.GetByID(ctx, withdrawID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "WithdrawGetByID",
@@ -48,7 +48,7 @@ func (w *WithdrawService) GetByID(ctx context.Context, withdrawID domain.ID) (do
 }
 
 func (w *WithdrawService) GetByShopID(ctx context.Context, shopID domain.ID) ([]domain.Withdraw, error) {
-	withdraws, err := w.repo.GetByShopID(ctx, shopID)
+	withdraws, err := w.withdrawRepo.GetByShopID(ctx, shopID)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "WithdrawGetByShopID",
@@ -71,7 +71,7 @@ func (w *WithdrawService) Create(ctx context.Context, param port.CreateWithdrawP
 		return domain.Withdraw{}, domain.ErrPrice
 	}
 
-	withdraw, err := w.repo.Create(ctx, domain.Withdraw{
+	withdraw, err := w.withdrawRepo.Create(ctx, domain.Withdraw{
 		ID:      domain.NewID(),
 		ShopID:  param.ShopID,
 		Comment: param.Comment,
@@ -118,7 +118,7 @@ func (w *WithdrawService) Update(ctx context.Context, withdrawID domain.ID, para
 		return domain.Withdraw{}, domain.ErrPrice
 	}
 
-	withdraw, err := w.repo.Update(ctx, wr)
+	withdraw, err := w.withdrawRepo.Update(ctx, wr)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"from": "Update",
@@ -132,19 +132,4 @@ func (w *WithdrawService) Update(ctx context.Context, withdrawID domain.ID, para
 		"status": withdraw.Status,
 	}).Info("WithdrawServiceUpdate OK")
 	return withdraw, nil
-}
-
-func (w *WithdrawService) Delete(ctx context.Context, withdrawID domain.ID) error {
-	err := w.repo.Delete(ctx, withdrawID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "WithdrawDelete",
-		}).Error(err.Error())
-		return err
-	}
-
-	log.WithFields(log.Fields{
-		"id": withdrawID,
-	}).Info("WithdrawServiceDelete OK")
-	return nil
 }

@@ -27,5 +27,4 @@ type IUserService interface {
 	GetByEmail(ctx context.Context, email string) (domain.User, error)
 	Create(ctx context.Context, param CreateUserParam) (domain.User, error)
 	Update(ctx context.Context, userID domain.ID, param UpdateUserParam) (domain.User, error)
-	Delete(ctx context.Context, userID domain.ID) error
 }

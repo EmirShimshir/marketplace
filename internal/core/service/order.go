@@ -43,21 +43,6 @@ func (o *OrderService) GetOrderCustomerByCustomerID(ctx context.Context, custome
 
 }
 
-func (o *OrderService) GetOrderCustomerByID(ctx context.Context, ID domain.ID) (domain.OrderCustomer, error) {
-	oc, err := o.orderRepo.GetOrderCustomerByID(ctx, ID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "GetOrderCustomerByID",
-		}).Error(err.Error())
-		return domain.OrderCustomer{}, err
-	}
-
-	log.WithFields(log.Fields{
-		"userID": oc.CustomerID,
-	}).Info("GetOrderCustomerByCustomerID OK")
-	return oc, nil
-}
-
 func (o *OrderService) getCartItemsByShopID(ctx context.Context, cart domain.Cart) (map[domain.ID][]domain.CartItem, error) {
 	cartItemsByShopID := make(map[domain.ID][]domain.CartItem)
 	for _, cartItem := range cart.Items {

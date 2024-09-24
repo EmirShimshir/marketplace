@@ -26,6 +26,5 @@ type IAuthService interface {
 	SignUp(ctx context.Context, param SignUpParam) error
 	LogOut(ctx context.Context, refreshToken domain.Token) error
 	Refresh(ctx context.Context, refreshToken domain.Token, fingerprint string) (domain.AuthDetails, error)
-	Verify(ctx context.Context, accessToken domain.Token) error
 	Payload(ctx context.Context, accessToken domain.Token) (domain.AuthPayload, error)
 }

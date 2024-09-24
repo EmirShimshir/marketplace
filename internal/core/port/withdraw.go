@@ -24,5 +24,4 @@ type IWithdrawService interface {
 	GetByShopID(ctx context.Context, shopID domain.ID) ([]domain.Withdraw, error)
 	Create(ctx context.Context, param CreateWithdrawParam) (domain.Withdraw, error)
 	Update(ctx context.Context, WithdrawID domain.ID, param UpdateWithdrawParam) (domain.Withdraw, error)
-	Delete(ctx context.Context, WithdrawID domain.ID) error
 }

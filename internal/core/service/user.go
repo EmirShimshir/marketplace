@@ -161,18 +161,3 @@ func (u *UserService) Update(ctx context.Context, userID domain.ID,
 	}).Info("UserServiceUpdate OK")
 	return user, nil
 }
-
-func (u *UserService) Delete(ctx context.Context, userID domain.ID) error {
-	err := u.userRepo.Delete(ctx, userID)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"from": "UserServiceDelete",
-		}).Error(err.Error())
-		return err
-	}
-
-	log.WithFields(log.Fields{
-		"userID": userID,
-	}).Info("UserServiceDelete OK")
-	return nil
-}

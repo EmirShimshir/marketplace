@@ -24,10 +24,5 @@ type UpdateProductParam struct {
 }
 
 type IProductService interface {
-	Get(ctx context.Context, limit, offset int64) ([]domain.Product, error)
 	GetByID(ctx context.Context, productID domain.ID) (domain.Product, error)
-	GetByName(ctx context.Context, name string) ([]domain.Product, error)
-	Create(ctx context.Context, param CreateProductParam) (domain.Product, error)
-	Update(ctx context.Context, productID domain.ID, param UpdateProductParam) (domain.Product, error)
-	Delete(ctx context.Context, productID domain.ID) error
 }

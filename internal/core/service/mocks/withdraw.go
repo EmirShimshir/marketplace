@@ -44,24 +44,6 @@ func (_m *WithdrawService) Create(ctx context.Context, param port.CreateWithdraw
 	return r0, r1
 }
 
-// Delete provides a mock function with given fields: ctx, WithdrawID
-func (_m *WithdrawService) Delete(ctx context.Context, WithdrawID domain.ID) error {
-	ret := _m.Called(ctx, WithdrawID)
-
-	if len(ret) == 0 {
-		panic("no return value specified for Delete")
-	}
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.ID) error); ok {
-		r0 = rf(ctx, WithdrawID)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // Get provides a mock function with given fields: ctx, limit, offset
 func (_m *WithdrawService) Get(ctx context.Context, limit int64, offset int64) ([]domain.Withdraw, error) {
 	ret := _m.Called(ctx, limit, offset)
