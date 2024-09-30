@@ -10,7 +10,16 @@ up:
 	docker compose up -d
 
 test:
-	go test -race ./...
+	rm -rf allure-results
+	go test -shuffle on \
+		./internal/core/service/test --parallel 8
+
+allure:
+	rm -rf allure-reports
+	allure generate allure-results -o allure-reports
+	allure serve allure-results -p 4000
+
+report: test allure
 
 copy_csv:
 	export PGPASSWORD=postgres && psql -h localhost -p 5432 -U postgres -d postgres -f ./csv/copy_csv.sql
@@ -68,3 +77,5 @@ mocks:
 			--filename email.go --structname EmailProvider
 	mockery --dir internal/core/port --name IObjectStorage --output internal/adapter/storage/mocks \
 			--filename storage.go --structname ObjectStorage
+	mockery --dir internal/core/port --name IPaymentGateway --output internal/adapter/payment/mocks \
+			--filename payment.go --structname PaymentGateway

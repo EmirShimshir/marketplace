@@ -34,6 +34,7 @@ type IShopService interface {
 	GetShopByID(ctx context.Context, shopID domain.ID) (domain.Shop, error)
 	GetShopBySellerID(ctx context.Context, sellerID domain.ID) ([]domain.Shop, error)
 	CreateShop(ctx context.Context, sellerID domain.ID, param CreateShopParam) (domain.Shop, error)
+
 	GetShopItems(ctx context.Context, limit, offset int64) ([]domain.ShopItem, error)
 	GetShopItemByProductID(ctx context.Context, productID domain.ID) (domain.ShopItem, error)
 	CreateShopItem(ctx context.Context, param CreateShopItemParam) (domain.ShopItem, error)
